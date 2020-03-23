@@ -1,35 +1,58 @@
 #!/bin/bash -x
 
-printf "Welcome to Flip Coin Simulation \n"
+echo "Welcome to Flip Coin Simulation"
 
-printf "How many times you to want flip a coin? \n"
-read count
-
-declare -A result
+declare -A dictionary
 
 #flipping coin to display head or tail
-#flipping coin multiple times and store the singlet combination in a dictonary
+#flipping coin multiple times and store the singlet,doublet & triplet combination in a dictonary
 
-headCount=0
-tailCount=0
+function flipcoin() {
 
-for (( index=0; index<$count; index++ ))
-do
-	Number=$(( RANDOM%2 ))
-	if [[ $Number -eq 1 ]]
-	then
-		printf "Head \n"
-	else
-		printf "Tail \n"
-	fi
+ for (( index=0; index<$1; index++ ))
+  do
+  	Count=0
+   for (( index1=0; index1<$2; index1++ ))
+   do
+    Number=$(( RANDOM%2 ))
+    if [[ $Number -eq 1 ]]
+    then
+       totalCount+=H
+    else
+       totalCount+=T
+    fi
+  done
+  dictionary[$Count]=$(( ${dictionary[$Count]}+1 ))
 done
-#Storing the result in dictionary
-result[H]=$headCount
-result[T]=$tailCount
+echo "Count of all combination: ${dictionary[@]}"
+echo "keys                      ${!dictionary[@]}"
+}
 
-#Computing Percentage of heads and Tail
-percentageOfHeads=( echo "scale=2;$headCount/$count*100" | bc )
-percentageOfTails=( echo "scale=2;$tailCount/$count *100" | bc )
+#function for percentage of singlet,doublet and triplet combination
+function percentageFlipCoin() {
+	for var in ${!dictionary[@]}
+	do
+		dictionary[$var]=( echo "scale=2;$((${dictionary[$var]}))/$coins*100" | bc )
+	done
+}
 
-printf "Percentage of heads: $percentageOfHeads \n"
-printf "Percentage of tails: $percentageOfTails \n"
+echo  "How many times you want to flip a coin?"
+read coins
+echo  "Press 1 for singlet combination or Press 2 for doublet combination Press 3 for triplet combination"
+read choice
+
+case $choice in
+  1)
+  flipcoin $coins $choice
+  percentageFlipCoin
+  echo "Percentage of singlet combination: ${dictionary[@]}"
+  ;;
+  2)
+  flipcoin $coins $choice
+  percentageFlipCoin
+  echo "Percentage of doublet combination: ${dictionary[@]}"
+  ;;
+  *)
+  echo "wrong input"
+  ;;
+esac
