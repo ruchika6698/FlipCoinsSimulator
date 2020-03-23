@@ -12,8 +12,8 @@ function flipcoin() {
   	do
   		Count=0
 		for (( index1=0; index1<$2; index1++ ))
-   	do
-    		Number=$(( RANDOM%2 ))
+		do
+			Number=$(( RANDOM%2 ))
     		if [[ $Number -eq 1 ]]
     		then
        		totalCount+=H
@@ -60,3 +60,30 @@ case $choice in
  	 echo "wrong input"
 	;;
 esac
+
+declare -a Array
+counter=0
+for var in ${dictionary[@]}
+do
+	Array[$counter]=$var
+	(( counter++ ))
+done
+echo "Array: ${Array[@]}"
+
+function sorting(){
+	for((i=0; i < ${#Array[@]}; i++))
+	do
+   	for((j=$i+1; j<${#Array[@]}; j++))
+   	do
+      	if [[ ${Array[i]} -gt ${Array[j]} ]]
+      	then
+         	temp=${Array[i]}
+         	Array[i]=${Array[j]}
+         	Array[j]=$temp
+      	fi
+   	done
+	done
+echo "Sorting Combination: ${Array[@]}"
+}
+
+sorting
