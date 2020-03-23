@@ -14,14 +14,14 @@ function flipcoin() {
 		for (( index1=0; index1<$2; index1++ ))
 		do
 			Number=$(( RANDOM%2 ))
-    		if [[ $Number -eq 1 ]]
-    		then
-       		totalCount+=H
-    		else
-       		totalCount+=T
-    		fi
+			if [[ $Number -eq 1 ]]
+			then
+				totalCount+=H
+			else
+				totalCount+=T
+			fi
 		done
-  		dictionary[$Count]=$(( ${dictionary[$Count]}+1 ))
+		dictionary[$Count]=$(( ${dictionary[$Count]}+1 ))
 	done
 	echo "Count of all combination: ${dictionary[@]}"
 	echo "keys                      ${!dictionary[@]}"
