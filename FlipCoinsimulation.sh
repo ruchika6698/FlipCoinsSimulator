@@ -70,20 +70,21 @@ do
 done
 echo "Array: ${Array[@]}"
 
+#sorting function for winning Combination
 function sorting(){
 	for((i=0; i < ${#Array[@]}; i++))
 	do
-   	for((j=$i+1; j<${#Array[@]}; j++))
-   	do
-      	if [[ ${Array[i]} -gt ${Array[j]} ]]
-      	then
-         	temp=${Array[i]}
-         	Array[i]=${Array[j]}
-         	Array[j]=$temp
-      	fi
-   	done
+		for((j=$i+1; j<${#Array[@]}; j++))
+		do
+			if [[ ${Array[i]} -gt ${Array[j]} ]]
+			then
+				temp=${Array[i]}
+				Array[i]=${Array[j]}
+				Array[j]=$temp
+			fi
+		done
 	done
-echo "Sorting Combination: ${Array[@]}"
+	echo "Sorting Combination: ${Array[@]}"
 }
 
 sorting
